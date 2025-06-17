@@ -6,7 +6,31 @@
 # Before running this script, please check that the business whom you work for allow configuration of their machines in such a way.
 
 # Config
-packages_to_install=(docker helm awscli kubernetes-cli tfenv trufflehog tfswitch)
+packages_to_install=(
+  awscli
+  asdf
+  docker
+  docker-compose
+  go
+  git
+  gitlab-ci
+  gitlab-ci-local
+  helm
+  iterm2
+  jq
+  kind
+  k9s
+  kubectl
+  kustomize
+  pip
+  terraform
+  tfenv
+  tfswitch
+  sublime-text
+  shellcheck
+  yaml
+  zsh
+)
 
 # First up, let's install Homebrew if it's not already installed.
 if command -v brew &> /dev/null; then
@@ -38,6 +62,14 @@ for pkg in "${packages_to_install[@]}"; do
   fi
 done
 
+# Install Python.
+if ! command -v python3 &>/dev/null; then
+  echo "Python 3 is not installed. Installing Python 3 using Homebrew..."
+  brew install python
+else
+  echo "Python 3 is already installed."
+fi
+
 # Install my 'Go To' IDE (IntelliJ IDEA).
 if ! brew list --cask intellij-idea &> /dev/null; then
   echo "IntelliJ IDEA Community Edition is not installed. Installing..."
@@ -47,10 +79,13 @@ else
   echo "IntelliJ IDEA Community Edition is already installed."
 fi
 
-# Install Python.
-if ! command -v python3 &>/dev/null; then
-  echo "Python 3 is not installed. Installing Python 3 using Homebrew..."
-  brew install python
+
+# Install my 'Go To' VSCODE (VS Code Editor).
+if ! brew list --cask visual-studio-code &> /dev/null; then
+  echo "Visual Studio Code is not installed. Installing..."
+  brew install --cask visual-studio-code
+  echo "Visual Studio Code installed successfully!"
 else
-  echo "Python 3 is already installed."
+  echo "Visual Studio Code is already installed."
 fi
+
