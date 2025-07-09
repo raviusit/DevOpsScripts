@@ -22,14 +22,13 @@ packages_to_install=(
   k9s
   kubectl
   kustomize
-  pip
+  pipx
+  pyenv
   terraform
-  tfenv
-  tfswitch
+  terragrunt
   sublime-text
   shellcheck
   yaml
-  zsh
 )
 
 # First up, let's install Homebrew if it's not already installed.
@@ -88,4 +87,25 @@ if ! brew list --cask visual-studio-code &> /dev/null; then
 else
   echo "Visual Studio Code is already installed."
 fi
+
+# Install oh-my-zsh and update settings for auto-completion and plugins.
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  echo "Installing oh-my-zsh..."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+  echo "oh-my-zsh installed successfully!"
+else
+  echo "oh-my-zsh is already installed."
+fi            
+
+# Replace ~/.zshrc with the contents of .zshrc from the current directory
+if [ -f ".zshrc" ]; then
+  cp .zshrc ~/.zshrc
+  echo "~/.zshrc has been replaced with the contents of .zshrc from the current directory."
+  # Reload zsh configuration
+  zsh
+  source ~/.zshrc
+else
+  echo "No .zshrc file found in the current directory. Skipping replacement."
+fi
+
 
